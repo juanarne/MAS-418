@@ -111,6 +111,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"935"</v>
+              <v n="TextDefault">"Mode: %s"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"310"</v>
               <v n="TextDefault">"RUNNING"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -133,6 +138,11 @@
             <o>
               <v n="TextID">"978"</v>
               <v n="TextDefault">"Started"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"645"</v>
+              <v n="TextDefault">"Status: %s"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
