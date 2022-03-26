@@ -10,6 +10,13 @@ VAR
 	fInitialVelocity : LREAL;
 	eStatus : E_CraneStatus;
 	eMode : E_CraneMode;
+	aPistonEndStopMsg : ARRAY [0..2] OF STRING := ['End Stop not active', 'Piston has reached upper End Stop', 'Piston has reached Lower End Stop'];
+ 	fPressureEng : REAL;
+	fFlowEng : REAL;
+	fPressureBar : LREAL := 60;
+	fFlowLmin : LREAL := 20;
+	bPistonMaxNewValue : BOOL;
+	fMaxPistonPosition : LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -28,10 +35,10 @@ END_IF
 fPositionAutoMode := Inputs.fCylinderVelocityReference * 1/2*(fTime*fTime) + fInitialVelocity * fTime + fInitialPosition;
 
 // added max/min outout value to avoid to large output for visualization
-IF fPositionAutoMode >= Parameters.fPistonPosMax THEN
-	fPositionAutoMode := Parameters.fPistonPosMax;	
-ELSIF fPositionAutoMode <= Parameters.fPistonPosMin  THEN
-	fPositionAutoMode := Parameters.fPistonPosMin; 
+IF fPositionAutoMode >= Parameters.stPistonRange.fPistonPosMax THEN
+	fPositionAutoMode := Parameters.stPistonRange.fPistonPosMax;	
+ELSIF fPositionAutoMode <= Parameters.stPistonRange.fPistonPosMin  THEN
+	fPositionAutoMode := Parameters.stPistonRange.fPistonPosMin; 
 ELSE	
 	fPositionAutoMode := fPositionAutoMode;
 END_IF
@@ -41,6 +48,7 @@ IF Inputs.bAutoMode THEN
 ELSE
 	Outputs.fCylinderPosition := Inputs.fManualCylinderPositionReference;	
 END_IF
+
 
 Outputs.bSimulationRunning := bRunning;  
 Outputs.fSimulationTime := fTime; 
@@ -67,7 +75,40 @@ IF inputs.bAutoMode THEN
 	eMode := E_CraneMode.Auto;
 ELSE
 	eMode := E_CraneMode.Manual;
-END_IF]]></ST>
+END_IF
+
+//Logic for pistonStops
+IF Outputs.fCylinderPosition <= Parameters.stPistonRange.fPistonPosMin THEN
+	Outputs.bPistonLowerEndStop := TRUE;
+	Outputs.bPistonUpperEndStop := FALSE;
+	HMI.sPistonEndStopMessages := aPistonEndStopMsg[2];
+	
+ELSIF Outputs.fCylinderPosition >= Parameters.stPistonRange.fPistonPosMax THEN
+	Outputs.bPistonLowerEndStop := FALSE;
+	Outputs.bPistonUpperEndStop := TRUE;
+	HMI.sPistonEndStopMessages := aPistonEndStopMsg[1];
+
+ELSE
+	Outputs.bPistonLowerEndStop := FALSE;
+	Outputs.bPistonUpperEndStop := FALSE;
+	HMI.sPistonEndStopMessages := aPistonEndStopMsg[0];
+END_IF
+
+//unit conversions
+
+fPressureEng := LREAL_TO_REAL (F_BarToEng(fBar := fPressureBar));
+fFlowEng := LREAL_TO_REAL (F_LminToEng(fLminFlow := fFlowLmin));
+
+//Piston stroke
+
+F_UpdateParametersByReference(
+	bSetNewValue := bPistonMaxNewValue,
+	fMaxPistonStroke := fMaxPistonPosition,
+	paramCylinderPiston := Parameters.stPistonRange
+);
+	
+	
+]]></ST>
     </Implementation>
     <LineIds Name="CraneSimulation">
       <LineId Id="5" Count="1" />
@@ -86,6 +127,7 @@ END_IF]]></ST>
       <LineId Id="75" Count="0" />
       <LineId Id="77" Count="1" />
       <LineId Id="76" Count="0" />
+      <LineId Id="168" Count="0" />
       <LineId Id="24" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="17" Count="0" />
@@ -108,6 +150,36 @@ END_IF]]></ST>
       <LineId Id="124" Count="1" />
       <LineId Id="127" Count="1" />
       <LineId Id="126" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="141" Count="1" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="146" Count="0" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="160" Count="0" />
+      <LineId Id="153" Count="0" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="155" Count="1" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="170" Count="0" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="193" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="199" Count="1" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="151" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

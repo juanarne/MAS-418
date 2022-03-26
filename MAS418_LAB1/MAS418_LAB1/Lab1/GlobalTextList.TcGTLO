@@ -36,6 +36,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"226"</v>
+              <v n="TextDefault">"Current Max Range: %f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"957"</v>
+              <v n="TextDefault">"Current Max: %f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"995"</v>
               <v n="TextDefault">"Cylinder Position Reference: %f [m]"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -96,6 +106,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"796"</v>
+              <v n="TextDefault">"Enter new max position"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"744"</v>
+              <v n="TextDefault">"Enter new max position: %f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"660"</v>
               <v n="TextDefault">"MANUAL"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -118,6 +138,11 @@
             <o>
               <v n="TextID">"310"</v>
               <v n="TextDefault">"RUNNING"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"808"</v>
+              <v n="TextDefault">"Set new max position"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

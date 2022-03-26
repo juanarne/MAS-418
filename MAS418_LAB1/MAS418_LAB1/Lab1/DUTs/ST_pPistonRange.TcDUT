@@ -3,8 +3,8 @@
   <DUT Name="ST_pPistonRange" Id="{a93cbe16-5d88-4be3-9b01-9fce5fbdc079}">
     <Declaration><![CDATA[TYPE ST_pPistonRange :
 STRUCT
-	fPistonPosMin : LREAL : 0.0;
-	fPistonPosMax : LREAL : 0.5;
+	fPistonPosMin : LREAL := 0.0;
+	fPistonPosMax : LREAL := 0.5;
 END_STRUCT
 END_TYPE
 ]]></Declaration>
