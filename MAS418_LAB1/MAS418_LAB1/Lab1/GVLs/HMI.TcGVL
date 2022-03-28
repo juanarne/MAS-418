@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
-  <GVL Name="HMI" Id="{f4505ebe-755d-4b1a-9777-bfeb2aca0966}">
-    <Declaration><![CDATA[{attribute 'qualified_only'}
-VAR_GLOBAL
-	sPistonEndStopMessages : STRING;
-END_VAR]]></Declaration>
-  </GVL>
-</TcPlcObject>
